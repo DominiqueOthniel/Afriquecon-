@@ -1,54 +1,52 @@
-import Image from 'next/image';
-
 export default function Routes() {
   const routes = [
     {
+      id: 'yaounde-lagos',
       from: 'Yaoundé',
       to: 'Lagos',
       duration: '8h',
       price: '50,000',
-      frequency: 'Quotidien',
-      image: '/images/service-bus-white.jpg'
+      frequency: 'Quotidien'
     },
     {
+      id: 'douala-abuja',
       from: 'Douala',
       to: 'Abuja',
       duration: '10h',
       price: '55,000',
-      frequency: 'Quotidien',
-      image: '/images/service-bus-night.jpg'
+      frequency: 'Quotidien'
     },
     {
+      id: 'buea-port-harcourt',
       from: 'Buea',
       to: 'Port Harcourt',
       duration: '5h',
       price: '35,000',
-      frequency: 'Quotidien',
-      image: '/images/hero-bus-people.jpg'
+      frequency: 'Quotidien'
     },
     {
+      id: 'yaounde-accra',
       from: 'Yaoundé',
       to: 'Accra',
       duration: '24h',
       price: '85,000',
-      frequency: '3x/semaine',
-      image: '/images/passengers-boarding.jpg'
+      frequency: '3x/semaine'
     },
     {
+      id: 'douala-abidjan',
       from: 'Douala',
       to: 'Abidjan',
       duration: '30h',
       price: '95,000',
-      frequency: '2x/semaine',
-      image: '/images/service-bus-white.jpg'
+      frequency: '2x/semaine'
     },
     {
+      id: 'buea-yaounde',
       from: 'Buea',
       to: 'Yaoundé',
       duration: '4h',
       price: '15,000',
-      frequency: 'Quotidien',
-      image: '/images/service-bus-night.jpg'
+      frequency: 'Quotidien'
     },
   ];
 
@@ -64,22 +62,25 @@ export default function Routes() {
           </p>
         </div>
 
+        <div className="relative h-64 md:h-80 mb-12 rounded-2xl overflow-hidden shadow-xl">
+          <img
+            src="/images/can2021-2.jpg"
+            alt="Flotte Afrique-con"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          <div className="absolute bottom-8 left-8 right-8 text-white">
+            <h3 className="text-3xl md:text-4xl font-bold mb-2">Notre flotte moderne</h3>
+            <p className="text-lg md:text-xl">Bus confortables et sécurisés pour tous vos trajets</p>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {routes.map((route, index) => (
+          {routes.map((route) => (
             <div
-              key={index}
+              key={route.id}
               className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
             >
-              <div className="relative h-48">
-                <Image
-                  src={route.image}
-                  alt={`${route.from} to ${route.to}`}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-              </div>
-
               <div className="bg-red-600 p-6">
                 <div className="flex items-center justify-between text-white">
                   <div>
