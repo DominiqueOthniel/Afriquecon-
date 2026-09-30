@@ -72,11 +72,12 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-bold mb-4">Liens rapides</h4>
             <ul className="space-y-2">
-              <li><Link href="#home" className="text-gray-400 hover:text-red-500 transition-colors">Accueil</Link></li>
-              <li><Link href="#services" className="text-gray-400 hover:text-red-500 transition-colors">Services</Link></li>
-              <li><Link href="#routes" className="text-gray-400 hover:text-red-500 transition-colors">Destinations</Link></li>
-              <li><Link href="#comfort" className="text-gray-400 hover:text-red-500 transition-colors">Classes de confort</Link></li>
-              <li><Link href="#booking" className="text-gray-400 hover:text-red-500 transition-colors">Réservation</Link></li>
+              <li><Link href="/" className="text-gray-400 hover:text-red-500 transition-colors">Accueil</Link></li>
+              <li><Link href="/reserver" className="text-gray-400 hover:text-red-500 transition-colors">Réserver</Link></li>
+              <li><Link href="/horaires" className="text-gray-400 hover:text-red-500 transition-colors">Horaires</Link></li>
+              <li><Link href="/agences" className="text-gray-400 hover:text-red-500 transition-colors">Nos agences</Link></li>
+              <li><Link href="/faq" className="text-gray-400 hover:text-red-500 transition-colors">FAQ</Link></li>
+              <li><Link href="/ma-reservation" className="text-gray-400 hover:text-red-500 transition-colors">Ma réservation</Link></li>
             </ul>
           </div>
 

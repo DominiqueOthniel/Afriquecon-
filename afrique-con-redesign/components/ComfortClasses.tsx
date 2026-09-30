@@ -110,7 +110,7 @@ export default function ComfortClasses() {
                 ))}
               </ul>
 
-              <button className="w-full bg-gradient-to-r from-red-600 to-yellow-500 hover:shadow-xl text-white py-4 rounded-xl font-semibold transition-all">
+              <button className="w-full bg-gray-800 hover:bg-gray-900 text-white py-4 rounded-xl font-semibold transition-colors">
                 Choisir Gold Class
               </button>
             </div>
