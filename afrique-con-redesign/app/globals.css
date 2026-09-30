@@ -7,17 +7,23 @@
     --primary: #ed1c24;
     --secondary: #8b0000;
     --accent: #cc0000;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: #0a0a0a;
-      --foreground: #ededed;
-    }
+    color-scheme: light;
   }
 
   html {
     scroll-behavior: smooth;
+  }
+
+  input,
+  select,
+  textarea {
+    color: var(--foreground);
+    background-color: #ffffff;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #6b7280;
   }
 
   body {
