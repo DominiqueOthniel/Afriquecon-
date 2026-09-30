@@ -7,7 +7,7 @@ const path = require('path');
   
   const outputDir = '/cursor/stores/bc-01a0f40d-2bfc-738a-8cf4-aa82af7239f7/media/afrique-con';
   
-  console.log('Lancement des captures...');
+  console.log('Lancement des captures avec nouvelle palette...');
   
   // Desktop capture
   console.log('Capture desktop (1440x900)...');
@@ -17,6 +17,14 @@ const path = require('path');
   
   await desktopPage.goto('http://localhost:3000', { waitUntil: 'networkidle' });
   await desktopPage.waitForTimeout(2000);
+  
+  // Masquer le bouton dev Next.js
+  await desktopPage.evaluate(() => {
+    const nextIndicator = document.querySelector('[data-nextjs-toast-errors-parent]') || 
+                         document.querySelector('nextjs-portal') ||
+                         document.querySelector('[style*="position: fixed"][style*="bottom"]');
+    if (nextIndicator) nextIndicator.remove();
+  });
   
   await desktopPage.screenshot({
     path: path.join(outputDir, 'desktop-home.png'),
@@ -41,6 +49,14 @@ const path = require('path');
   await mobilePage.goto('http://localhost:3000', { waitUntil: 'networkidle' });
   await mobilePage.waitForTimeout(2000);
   
+  // Masquer le bouton dev Next.js
+  await mobilePage.evaluate(() => {
+    const nextIndicator = document.querySelector('[data-nextjs-toast-errors-parent]') || 
+                         document.querySelector('nextjs-portal') ||
+                         document.querySelector('[style*="position: fixed"][style*="bottom"]');
+    if (nextIndicator) nextIndicator.remove();
+  });
+  
   await mobilePage.screenshot({
     path: path.join(outputDir, 'mobile-home.png'),
     fullPage: false
@@ -61,6 +77,14 @@ const path = require('path');
   const videoPage = await context.newPage();
   await videoPage.goto('http://localhost:3000', { waitUntil: 'networkidle' });
   await videoPage.waitForTimeout(2000);
+  
+  // Masquer le bouton dev
+  await videoPage.evaluate(() => {
+    const nextIndicator = document.querySelector('[data-nextjs-toast-errors-parent]') || 
+                         document.querySelector('nextjs-portal') ||
+                         document.querySelector('[style*="position: fixed"][style*="bottom"]');
+    if (nextIndicator) nextIndicator.remove();
+  });
   
   // Scroll lentement à travers la page
   await videoPage.evaluate(async () => {
@@ -89,7 +113,7 @@ const path = require('path');
   // Renommer la vidéo
   const videoFiles = fs.readdirSync(outputDir).filter(f => f.endsWith('.webm'));
   if (videoFiles.length > 0) {
-    const oldPath = path.join(outputDir, videoFiles[0]);
+    const oldPath = path.join(outputDir, videoFiles[videoFiles.length - 1]);
     const newPath = path.join(outputDir, 'site-demo-temp.webm');
     fs.renameSync(oldPath, newPath);
     
@@ -104,10 +128,11 @@ const path = require('path');
     }
   }
   
-  console.log('Captures terminées !');
+  console.log('Captures terminées avec nouvelle palette rouge !');
   console.log('Fichiers créés:');
   console.log('- desktop-home.png');
   console.log('- desktop-full.png');
   console.log('- mobile-home.png');
-  console.log('- site-demo.mp4 (ou .webm)');
+  console.log('- site-demo.mp4');
+  console.log('- original-palette.png (déjà créé)');
 })();

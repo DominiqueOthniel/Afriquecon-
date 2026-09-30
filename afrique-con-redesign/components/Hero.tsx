@@ -18,14 +18,14 @@ export default function Hero() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-32 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
           <div className="mb-8 animate-slide-up">
-            <span className="inline-block px-6 py-3 bg-amber-500/20 backdrop-blur-sm border border-amber-500/50 text-amber-300 rounded-full text-sm font-semibold mb-6">
+            <span className="inline-block px-6 py-3 bg-red-500/20 backdrop-blur-sm border border-red-500/50 text-red-300 rounded-full text-sm font-semibold mb-6">
               Votre partenaire de confiance depuis 2010
             </span>
           </div>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 text-white animate-slide-up leading-tight" style={{ animationDelay: '0.1s' }}>
             Voyagez à travers l'Afrique
-            <span className="block bg-gradient-to-r from-amber-400 to-emerald-400 text-transparent bg-clip-text mt-4">
+            <span className="block bg-gradient-to-r from-red-400 to-red-800400 text-transparent bg-clip-text mt-4">
               dans un confort exceptionnel
             </span>
           </h1>
@@ -37,7 +37,7 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20 animate-slide-up" style={{ animationDelay: '0.3s' }}>
             <Link
               href="#booking"
-              className="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-10 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-amber-500/50 transform hover:scale-105 transition-all duration-300 inline-flex items-center space-x-3"
+              className="bg-gradient-to-r from-red-600 to-red-700500 text-white px-10 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-red-500/50 transform hover:scale-105 transition-all duration-300 inline-flex items-center space-x-3"
             >
               <span>Réserver un billet</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,7 +55,7 @@ export default function Hero() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '0.4s' }}>
             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 transform hover:scale-105">
-              <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center mb-6 mx-auto">
+              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700600 rounded-full flex items-center justify-center mb-6 mx-auto">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -65,7 +65,7 @@ export default function Hero() {
             </div>
 
             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300 transform hover:scale-105">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center mb-6 mx-auto">
+              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-800600 rounded-full flex items-center justify-center mb-6 mx-auto">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>

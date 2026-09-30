@@ -70,7 +70,7 @@ export default function Services() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Des services <span className="bg-gradient-to-r from-amber-600 to-emerald-600 text-transparent bg-clip-text">d'exception</span>
+            Des services <span className="bg-gradient-to-r from-red-600 to-red-800600 text-transparent bg-clip-text">d'exception</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Profitez d'une expérience de voyage premium avec nos équipements modernes et nos services de qualité
@@ -83,7 +83,7 @@ export default function Services() {
               key={index}
               className="group bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-emerald-500 rounded-xl flex items-center justify-center mb-6 text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-800500 rounded-xl flex items-center justify-center mb-6 text-white group-hover:scale-110 transition-transform duration-300 shadow-lg">
                 {service.icon}
               </div>
               <h3 className="text-xl font-bold mb-3 text-gray-900">{service.title}</h3>
@@ -92,7 +92,7 @@ export default function Services() {
           ))}
         </div>
 
-        <div className="bg-gradient-to-r from-amber-600 to-emerald-600 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
+        <div className="bg-gradient-to-r from-red-600 to-red-800600 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <img
               src="https://images.unsplash.com/photo-1508565396616-f06b2e8155d6?q=80&w=2070&auto=format&fit=crop"
@@ -103,7 +103,7 @@ export default function Services() {
           <div className="flex flex-col md:flex-row items-center justify-between relative z-10">
             <div className="mb-6 md:mb-0">
               <h3 className="text-3xl font-bold mb-2">Partenaire officiel de la CAN 2021</h3>
-              <p className="text-amber-100 text-lg">
+              <p className="text-red-100 text-lg">
                 Sélectionnés pour transporter toutes les équipes africaines durant la Coupe d'Afrique des Nations au Cameroun
               </p>
             </div>

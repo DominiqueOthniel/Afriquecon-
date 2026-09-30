@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Site Afrique-con
 
-## Getting Started
+Site web moderne pour Afrique-con Plc, compagnie de transport inter-urbain en Afrique.
 
-First, run the development server:
+## Démarrage en développement
+
+Installer les dépendances:
+
+```bash
+npm install
+```
+
+Lancer le serveur de développement:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000) dans votre navigateur.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build de production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Pour créer un build optimisé pour la production:
 
-## Learn More
+```bash
+npm run build
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Déploiement Netlify
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Ce projet est optimisé pour Netlify avec configuration automatique.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Prérequis
 
-## Deploy on Vercel
+- Compte Netlify (gratuit: https://www.netlify.com)
+- Repository Git (GitHub, GitLab ou Bitbucket)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Configuration automatique
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Le fichier `netlify.toml` configure automatiquement:
+- Build avec Next.js 16 et Node 20
+- Plugin @netlify/plugin-nextjs pour optimisation
+- Cache des assets statiques (1 an)
+- Headers de sécurité (X-Frame-Options, CSP, etc.)
+- Redirections SEO
+
+### Déploiement
+
+**Option 1: Depuis le dashboard Netlify**
+
+1. Connectez-vous sur https://app.netlify.com
+2. Cliquez sur "Add new site" > "Import an existing project"
+3. Connectez votre repository Git
+4. Netlify détecte automatiquement la configuration
+5. Cliquez sur "Deploy"
+
+**Option 2: Avec Netlify CLI**
+
+```bash
+npm install -g netlify-cli
+netlify login
+netlify init
+netlify deploy --prod
+```
+
+### Fonctionnalités Netlify activées
+
+- **Formulaire de réservation**: Envoi via Netlify Forms (pas de backend requis)
+- **Images Unsplash**: Configuration remotePatterns pour next/image
+- **Cache optimisé**: Assets statiques avec headers Cache-Control
+- **Sécurité**: Headers CSP et protection XSS
+
+### Variables d'environnement (optionnel)
+
+Si vous souhaitez ajouter des intégrations:
+
+```bash
+# Dans le dashboard Netlify > Site settings > Environment variables
+NEXT_PUBLIC_GA_ID=votre-id-google-analytics
+```
+
+### Support
+
+Le site est prêt à être déployé tel quel. La configuration Netlify est optimale pour Next.js 16.
+
+Pour plus d'informations: https://docs.netlify.com/integrations/frameworks/next-js/
+
+## Technologies
+
+- Next.js 16.3.8 avec App Router
+- React 19
+- TypeScript 5
+- Tailwind CSS v4
+- Netlify pour hébergement et formulaires
+
+## Structure du projet
+
+```
+afrique-con-redesign/
+├── app/                    # Pages Next.js (App Router)
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── globals.css
+├── components/             # Composants React
+│   ├── Header.tsx
+│   ├── Hero.tsx
+│   ├── Services.tsx
+│   ├── Routes.tsx
+│   ├── ComfortClasses.tsx
+│   ├── Booking.tsx
+│   └── Footer.tsx
+├── public/                 # Assets statiques
+├── netlify.toml           # Configuration Netlify
+└── next.config.ts         # Configuration Next.js
+```
+
+## Licence
+
+© 2026 Afrique-con Plc. Tous droits réservés.

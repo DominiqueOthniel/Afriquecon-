@@ -3,9 +3,10 @@
 @layer base {
   :root {
     --background: #ffffff;
-    --foreground: #171717;
-    --primary: #d97706;
-    --secondary: #059669;
+    --foreground: #1a1a1a;
+    --primary: #ed1c24;
+    --secondary: #8b0000;
+    --accent: #cc0000;
   }
 
   @media (prefers-color-scheme: dark) {

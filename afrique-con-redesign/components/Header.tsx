@@ -34,7 +34,7 @@ export default function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="#home" className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-600 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800 rounded-full flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-xl">AC</span>
             </div>
             <div>
@@ -54,8 +54,8 @@ export default function Header() {
                 href={link.href}
                 className={`font-medium transition-colors duration-200 ${
                   isScrolled
-                    ? 'text-gray-700 hover:text-amber-600'
-                    : 'text-white hover:text-amber-400'
+                    ? 'text-gray-700 hover:text-red-600'
+                    : 'text-white hover:text-red-400'
                 }`}
               >
                 {link.label}
@@ -63,7 +63,7 @@ export default function Header() {
             ))}
             <Link
               href="#booking"
-              className="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-amber-500/50 transform hover:scale-105 transition-all duration-200"
+              className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-red-500/50 transform hover:scale-105 transition-all duration-200"
             >
               Réserver maintenant
             </Link>
@@ -111,8 +111,8 @@ export default function Header() {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`font-medium transition-colors duration-200 ${
                     isScrolled
-                      ? 'text-gray-700 hover:text-amber-600'
-                      : 'text-white hover:text-amber-400'
+                      ? 'text-gray-700 hover:text-red-600'
+                      : 'text-white hover:text-red-400'
                   }`}
                 >
                   {link.label}
@@ -121,7 +121,7 @@ export default function Header() {
               <Link
                 href="#booking"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-6 py-2.5 rounded-full font-semibold text-center"
+                className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2.5 rounded-full font-semibold text-center"
               >
                 Réserver maintenant
               </Link>
