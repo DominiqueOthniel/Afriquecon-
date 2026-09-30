@@ -9,7 +9,7 @@ export default function Services() {
         </svg>
       ),
       title: 'WiFi gratuit',
-      description: 'Internet haut débit sans restriction'
+      description: 'Internet haut débit'
     },
     {
       icon: (
@@ -18,7 +18,7 @@ export default function Services() {
         </svg>
       ),
       title: 'Divertissement',
-      description: 'Écrans individuels avec films et musique'
+      description: 'Films et musique'
     },
     {
       icon: (
@@ -27,7 +27,7 @@ export default function Services() {
         </svg>
       ),
       title: 'Restauration',
-      description: 'Repas et boissons servis à bord'
+      description: 'Repas et boissons'
     },
     {
       icon: (
@@ -36,51 +36,79 @@ export default function Services() {
         </svg>
       ),
       title: 'Anti-COVID 98%',
-      description: 'Ionisation active de l\'air'
+      description: 'Ionisation active'
     },
   ];
 
   return (
-    <section id="services" className="py-16 bg-gray-50">
+    <section id="services" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-3 text-gray-900">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
             Nos services
           </h2>
-          <p className="text-lg text-gray-600">
-            Confort et sécurité à bord
+          <p className="text-xl text-gray-600">
+            Confort et sécurité pour tous vos trajets
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all text-center"
-            >
-              <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center mb-4 text-white mx-auto">
-                {service.icon}
-              </div>
-              <h3 className="text-lg font-bold mb-2 text-gray-900">{service.title}</h3>
-              <p className="text-sm text-gray-600">{service.description}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="bg-red-600 rounded-2xl p-8 text-white relative overflow-hidden">
-          <div className="absolute right-0 top-0 bottom-0 w-1/3 opacity-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <div className="relative h-80 rounded-2xl overflow-hidden shadow-xl">
             <Image
-              src="/images/can2021-1.jpg"
-              alt="CAN 2021"
+              src="/images/bus-comfort-class.jpg"
+              alt="Intérieur bus confort"
               fill
               className="object-cover"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+              <h3 className="text-3xl font-bold mb-2">Gold Comfort Class</h3>
+              <p className="text-lg">Sièges premium avec espace généreux</p>
+            </div>
           </div>
-          <div className="relative z-10">
-            <h3 className="text-2xl font-bold mb-2">Partenaire CAN 2021</h3>
-            <p className="text-lg">
-              Transport officiel des équipes africaines durant la Coupe d'Afrique des Nations
-            </p>
+
+          <div className="grid grid-cols-2 gap-4">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className="bg-gray-50 p-6 rounded-2xl hover:shadow-lg transition-all text-center"
+              >
+                <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center mb-4 text-white mx-auto">
+                  {service.icon}
+                </div>
+                <h3 className="text-lg font-bold mb-2 text-gray-900">{service.title}</h3>
+                <p className="text-sm text-gray-600">{service.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-red-600 rounded-2xl overflow-hidden shadow-xl">
+          <div className="grid md:grid-cols-2 gap-0">
+            <div className="relative h-64 md:h-auto">
+              <Image
+                src="/images/can2021-1.jpg"
+                alt="CAN 2021 Afrique-con"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="p-8 md:p-12 text-white flex flex-col justify-center">
+              <h3 className="text-3xl md:text-4xl font-bold mb-4">Partenaire officiel CAN 2021</h3>
+              <p className="text-lg md:text-xl mb-6">
+                Transport des équipes et supporters lors de la Coupe d'Afrique des Nations
+              </p>
+              <div className="flex gap-4">
+                <div className="text-center">
+                  <div className="text-3xl font-bold">15+</div>
+                  <div className="text-sm">Équipes</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold">5000+</div>
+                  <div className="text-sm">Passagers</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
