@@ -14,22 +14,11 @@ export default function Hero() {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 bg-black/65"></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-32 relative z-10 mb-20 md:mb-0">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="mb-6 flex justify-center">
-            <Image
-              src="/images/logo.png"
-              alt="Afrique-con"
-              width={200}
-              height={55}
-              className="h-auto"
-              priority
-            />
-          </div>
-
           <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
             Voyagez en toute sécurité à travers l'Afrique
           </h1>
