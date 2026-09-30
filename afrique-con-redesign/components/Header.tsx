@@ -44,7 +44,7 @@ export default function Header() {
 
           <div className="hidden md:block">
             <Link
-              href="#booking"
+              href="/reserver"
               className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
             >
               Réserver maintenant
@@ -80,7 +80,7 @@ export default function Header() {
               </a>
             ))}
             <Link
-              href="#booking"
+              href="/reserver"
               className="block bg-red-600 text-white text-center px-6 py-3 rounded-lg font-semibold mt-4"
               onClick={() => setIsMenuOpen(false)}
             >

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ROUTES, COMFORT_CLASSES } from '@/lib/booking-data';
 
@@ -17,6 +17,19 @@ export default function ReserverPage() {
     email: ''
   });
   const [bookingNumber, setBookingNumber] = useState('');
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const routeParam = params.get('route');
+    const classParam = params.get('class');
+    const route = ROUTES.find(r => r.id === routeParam);
+    setFormData(prev => ({
+      ...prev,
+      routeId: route ? route.id : prev.routeId,
+      comfortClass: classParam === 'gold' || classParam === 'silver' ? classParam : prev.comfortClass
+    }));
+    if (route) setStep(2);
+  }, []);
   const [loading, setLoading] = useState(false);
 
   const selectedRoute = ROUTES.find(r => r.id === formData.routeId);

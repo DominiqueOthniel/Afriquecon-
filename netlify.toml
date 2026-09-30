@@ -29,7 +29,7 @@
 
 [[redirects]]
   from = "/book"
-  to = "/#booking"
+  to = "/reserver"
   status = 301
 
 [[redirects]]

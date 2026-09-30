@@ -77,7 +77,7 @@ export default function Booking() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Réservez votre <span className="bg-gradient-to-r from-red-600 to-red-800600 text-transparent bg-clip-text">voyage</span>
+            Réservez votre <span className="text-red-600">voyage</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Remplissez le formulaire ci-dessous pour rechercher les horaires disponibles
@@ -204,7 +204,7 @@ export default function Booking() {
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-red-600 to-red-800600 text-white py-5 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-red-500/50 transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2"
+              className="w-full bg-red-600 hover:bg-red-700 text-white py-5 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-red-500/50 transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2"
             >
               <span>Rechercher les horaires</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
