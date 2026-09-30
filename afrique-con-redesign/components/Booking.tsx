@@ -16,7 +16,7 @@ export default function Booking() {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     
-    fetch('/', {
+    fetch('/__forms.html', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(new FormData(form) as any).toString()
