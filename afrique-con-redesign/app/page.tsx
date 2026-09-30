@@ -5,6 +5,7 @@ import Routes from '@/components/Routes';
 import ComfortClasses from '@/components/ComfortClasses';
 import Booking from '@/components/Booking';
 import Footer from '@/components/Footer';
+import MobileActionBar from '@/components/MobileActionBar';
 
 export default function Home() {
   return (
@@ -12,12 +13,13 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Services />
         <Routes />
+        <Services />
         <ComfortClasses />
         <Booking />
       </main>
       <Footer />
+      <MobileActionBar />
     </div>
   );
 }
