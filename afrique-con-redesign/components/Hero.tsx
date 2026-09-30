@@ -25,7 +25,7 @@ export default function Hero() {
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 text-white animate-slide-up leading-tight" style={{ animationDelay: '0.1s' }}>
             Voyagez à travers l'Afrique
-            <span className="block bg-gradient-to-r from-red-400 to-red-800400 text-transparent bg-clip-text mt-4">
+            <span className="block text-white drop-shadow-2xl mt-4" style={{ textShadow: '0 0 30px rgba(237, 28, 36, 0.8), 0 0 60px rgba(237, 28, 36, 0.6)' }}>
               dans un confort exceptionnel
             </span>
           </h1>
