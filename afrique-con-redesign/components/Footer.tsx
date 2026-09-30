@@ -39,7 +39,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div>
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-red-600 to-red-800600 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-xl">AC</span>
               </div>
               <div>

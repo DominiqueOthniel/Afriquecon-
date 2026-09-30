@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ComfortClasses() {
   return (
@@ -59,9 +60,12 @@ export default function ComfortClasses() {
                 ))}
               </ul>
 
-              <button className="w-full bg-gray-800 hover:bg-gray-900 text-white py-4 rounded-xl font-semibold transition-colors">
+              <Link
+                href="/reserver?class=silver"
+                className="block w-full text-center bg-gray-800 hover:bg-gray-900 text-white py-4 rounded-xl font-semibold transition-colors"
+              >
                 Choisir Silver Class
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -74,7 +78,7 @@ export default function ComfortClasses() {
                 className="object-cover"
               />
               <div className="absolute top-4 right-4">
-                <span className="px-4 py-2 bg-gradient-to-r from-red-600 to-yellow-500 text-white rounded-full text-sm font-semibold">
+                <span className="px-4 py-2 bg-red-600 text-white rounded-full text-sm font-semibold">
                   Premium
                 </span>
               </div>
@@ -110,9 +114,12 @@ export default function ComfortClasses() {
                 ))}
               </ul>
 
-              <button className="w-full bg-gray-800 hover:bg-gray-900 text-white py-4 rounded-xl font-semibold transition-colors">
+              <Link
+                href="/reserver?class=gold"
+                className="block w-full text-center bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-semibold transition-colors"
+              >
                 Choisir Gold Class
-              </button>
+              </Link>
             </div>
           </div>
         </div>

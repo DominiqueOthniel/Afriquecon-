@@ -15,7 +15,7 @@ export default function MobileActionBar() {
     <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-2xl z-50">
       <div className="grid grid-cols-3 gap-0">
         <Link
-          href="#booking"
+          href="/reserver"
           className="flex flex-col items-center justify-center py-3 px-2 text-red-600 hover:bg-red-50 transition-colors border-r border-gray-200"
         >
           <svg className="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
