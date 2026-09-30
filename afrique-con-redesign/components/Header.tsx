@@ -28,18 +28,22 @@ export default function Header() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'bg-white/95 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
+          : 'bg-black/20 backdrop-blur-sm'
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="#home" className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-600 to-emerald-600 rounded-full flex items-center justify-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-amber-600 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-xl">AC</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Afrique-con</h1>
-              <p className="text-xs text-gray-600">#ConnectingAfrica</p>
+              <h1 className={`text-xl font-bold ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
+                Afrique-con
+              </h1>
+              <p className={`text-xs ${isScrolled ? 'text-gray-600' : 'text-gray-200'}`}>
+                #ConnectingAfrica
+              </p>
             </div>
           </Link>
 
@@ -48,14 +52,18 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 hover:text-amber-600 font-medium transition-colors duration-200"
+                className={`font-medium transition-colors duration-200 ${
+                  isScrolled
+                    ? 'text-gray-700 hover:text-amber-600'
+                    : 'text-white hover:text-amber-400'
+                }`}
               >
                 {link.label}
               </Link>
             ))}
             <Link
               href="#booking"
-              className="bg-gradient-to-r from-amber-600 to-emerald-600 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+              className="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-amber-500/50 transform hover:scale-105 transition-all duration-200"
             >
               Réserver maintenant
             </Link>
@@ -63,11 +71,13 @@ export default function Header() {
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className={`md:hidden p-2 rounded-lg transition-colors ${
+              isScrolled ? 'hover:bg-gray-100' : 'hover:bg-white/10'
+            }`}
             aria-label="Toggle menu"
           >
             <svg
-              className="w-6 h-6"
+              className={`w-6 h-6 ${isScrolled ? 'text-gray-900' : 'text-white'}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -92,14 +102,18 @@ export default function Header() {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
+          <div className="md:hidden py-4 border-t border-gray-200/20">
             <nav className="flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-gray-700 hover:text-amber-600 font-medium transition-colors duration-200"
+                  className={`font-medium transition-colors duration-200 ${
+                    isScrolled
+                      ? 'text-gray-700 hover:text-amber-600'
+                      : 'text-white hover:text-amber-400'
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -107,7 +121,7 @@ export default function Header() {
               <Link
                 href="#booking"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="bg-gradient-to-r from-amber-600 to-emerald-600 text-white px-6 py-2.5 rounded-full font-semibold text-center"
+                className="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-6 py-2.5 rounded-full font-semibold text-center"
               >
                 Réserver maintenant
               </Link>
