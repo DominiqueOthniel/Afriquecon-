@@ -32,6 +32,10 @@
     font-family: system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
   }
+
+  html.locale-pending body {
+    visibility: hidden;
+  }
 }
 
 .gradient-text {

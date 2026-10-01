@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
+import { DEFAULT_LOCALE, LOCALE_BOOTSTRAP_SCRIPT } from "@/lib/i18n/config";
+import { dictionaries } from "@/lib/i18n/dictionaries";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,10 +15,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const defaultMeta = dictionaries[DEFAULT_LOCALE].meta;
+
 export const metadata: Metadata = {
-  title: "Afrique-con | Voyagez à travers l'Afrique dans le confort",
-  description: "Service de transport inter-urbain premium connectant le Cameroun, le Nigeria, le Bénin, le Togo, le Ghana et la Côte d'Ivoire. WiFi gratuit, divertissement à bord, confort exceptionnel.",
-  keywords: "transport Afrique, bus Cameroun Nigeria, voyage confortable Afrique, Afrique-con, transport inter-urbain",
+  title: defaultMeta.title,
+  description: defaultMeta.description,
+  keywords: "Africa bus travel, Cameroon Nigeria bus, intercity transport Africa, Afrique-con, transport Afrique, bus Cameroun Nigeria",
 };
 
 export default function RootLayout({
@@ -25,10 +30,16 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="fr"
+      lang={DEFAULT_LOCALE}
       className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
+      suppressHydrationWarning
     >
-      <body className="min-h-screen">{children}</body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: LOCALE_BOOTSTRAP_SCRIPT }} />
+      </head>
+      <body className="min-h-screen">
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }

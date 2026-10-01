@@ -1,3 +1,5 @@
+export type FrequencyKey = 'daily' | 'thrice-weekly' | 'twice-weekly';
+
 export const ROUTES = [
   {
     id: 'yaounde-lagos',
@@ -7,7 +9,7 @@ export const ROUTES = [
     distance: '450 km',
     silverPrice: 50000,
     goldPrice: 75000,
-    frequency: 'Quotidien',
+    frequency: 'daily' as FrequencyKey,
     departureTimes: ['06:00', '10:00', '14:00', '18:00']
   },
   {
@@ -18,7 +20,7 @@ export const ROUTES = [
     distance: '600 km',
     silverPrice: 55000,
     goldPrice: 82000,
-    frequency: 'Quotidien',
+    frequency: 'daily' as FrequencyKey,
     departureTimes: ['06:00', '12:00', '18:00']
   },
   {
@@ -29,7 +31,7 @@ export const ROUTES = [
     distance: '250 km',
     silverPrice: 35000,
     goldPrice: 52000,
-    frequency: 'Quotidien',
+    frequency: 'daily' as FrequencyKey,
     departureTimes: ['07:00', '11:00', '15:00', '19:00']
   },
   {
@@ -40,7 +42,7 @@ export const ROUTES = [
     distance: '1200 km',
     silverPrice: 85000,
     goldPrice: 127000,
-    frequency: '3x/semaine',
+    frequency: 'thrice-weekly' as FrequencyKey,
     departureTimes: ['06:00']
   },
   {
@@ -51,7 +53,7 @@ export const ROUTES = [
     distance: '1500 km',
     silverPrice: 95000,
     goldPrice: 142000,
-    frequency: '2x/semaine',
+    frequency: 'twice-weekly' as FrequencyKey,
     departureTimes: ['06:00']
   },
   {
@@ -62,7 +64,7 @@ export const ROUTES = [
     distance: '200 km',
     silverPrice: 15000,
     goldPrice: 22000,
-    frequency: 'Quotidien',
+    frequency: 'daily' as FrequencyKey,
     departureTimes: ['06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00']
   }
 ];

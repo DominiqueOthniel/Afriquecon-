@@ -3,12 +3,17 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import type { Booking, BookingStatus } from '@/lib/booking-data';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { useLanguage } from '@/lib/i18n/LanguageProvider';
+
+const STATUSES: BookingStatus[] = ['en attente', 'confirmée', 'payée', 'annulée'];
 
 interface BookingWithNumber extends Booking {
   number: string;
 }
 
 export default function AdminPage() {
+  const { t, locale, formatPrice } = useLanguage();
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
   const [bookings, setBookings] = useState<BookingWithNumber[]>([]);
@@ -64,10 +69,10 @@ export default function AdminPage() {
 
   const exportCSV = () => {
     const csv = [
-      ['Numéro', 'Statut', 'Trajet', 'Date', 'Horaire', 'Classe', 'Passagers', 'Nom', 'Téléphone', 'Email', 'Prix', 'Créé le'].join(','),
+      t.admin.csvHeaders.join(','),
       ...filteredBookings.map(b => [
         b.number,
-        b.status,
+        t.status[b.status] ?? b.status,
         `${b.from} → ${b.to}`,
         b.date,
         b.departureTime,
@@ -77,7 +82,7 @@ export default function AdminPage() {
         b.phone,
         b.email || '',
         b.totalPrice,
-        new Date(b.createdAt).toLocaleDateString('fr-FR')
+        new Date(b.createdAt).toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-GB')
       ].join(','))
     ].join('\n');
 
@@ -85,7 +90,7 @@ export default function AdminPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `reservations-${new Date().toISOString().split('T')[0]}.csv`;
+    a.download = `${t.admin.csvFilename}-${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
   };
 
@@ -115,10 +120,13 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
-          <h1 className="text-3xl font-bold mb-6">Admin Afrique-con</h1>
+          <div className="flex items-start justify-between gap-3 mb-6">
+            <h1 className="text-3xl font-bold">{t.admin.title}</h1>
+            <LanguageSwitcher />
+          </div>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold mb-2">Mot de passe</label>
+              <label className="block text-sm font-semibold mb-2">{t.admin.password}</label>
               <input
                 type="password"
                 value={password}
@@ -131,7 +139,7 @@ export default function AdminPage() {
               type="submit"
               className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold transition-colors"
             >
-              Se connecter
+              {t.admin.login}
             </button>
           </form>
         </div>
@@ -142,58 +150,59 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-wrap justify-between items-center gap-4 mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900">Administration</h1>
-            <p className="text-gray-600">Gestion des réservations Afrique-con</p>
+            <h1 className="text-4xl font-bold text-gray-900">{t.admin.heading}</h1>
+            <p className="text-gray-600">{t.admin.subtitle}</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <LanguageSwitcher />
             <button
               onClick={exportCSV}
               className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
             >
-              Exporter CSV
+              {t.admin.exportCsv}
             </button>
             <Link
               href="/"
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-xl font-semibold transition-colors"
             >
-              Retour au site
+              {t.admin.backToSite}
             </Link>
           </div>
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl p-6 mb-6">
-          <div className="flex gap-3 mb-6">
+          <div className="flex flex-wrap gap-3 mb-6">
             <button
               onClick={() => setFilter('all')}
               className={`px-4 py-2 rounded-xl font-semibold transition-colors ${filter === 'all' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700'}`}
             >
-              Toutes ({bookings.length})
+              {t.admin.filters.all} ({bookings.length})
             </button>
             <button
               onClick={() => setFilter('en attente')}
               className={`px-4 py-2 rounded-xl font-semibold transition-colors ${filter === 'en attente' ? 'bg-yellow-600 text-white' : 'bg-gray-100 text-gray-700'}`}
             >
-              En attente ({bookings.filter(b => b.status === 'en attente').length})
+              {t.admin.filters['en attente']} ({bookings.filter(b => b.status === 'en attente').length})
             </button>
             <button
               onClick={() => setFilter('confirmée')}
               className={`px-4 py-2 rounded-xl font-semibold transition-colors ${filter === 'confirmée' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}
             >
-              Confirmées ({bookings.filter(b => b.status === 'confirmée').length})
+              {t.admin.filters['confirmée']} ({bookings.filter(b => b.status === 'confirmée').length})
             </button>
             <button
               onClick={() => setFilter('payée')}
               className={`px-4 py-2 rounded-xl font-semibold transition-colors ${filter === 'payée' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700'}`}
             >
-              Payées ({bookings.filter(b => b.status === 'payée').length})
+              {t.admin.filters['payée']} ({bookings.filter(b => b.status === 'payée').length})
             </button>
             <button
               onClick={() => setFilter('annulée')}
               className={`px-4 py-2 rounded-xl font-semibold transition-colors ${filter === 'annulée' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-700'}`}
             >
-              Annulées ({bookings.filter(b => b.status === 'annulée').length})
+              {t.admin.filters['annulée']} ({bookings.filter(b => b.status === 'annulée').length})
             </button>
           </div>
 
@@ -206,15 +215,15 @@ export default function AdminPage() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b-2 border-gray-200 text-left">
-                    <th className="py-3 px-4 font-semibold">Numéro</th>
-                    <th className="py-3 px-4 font-semibold">Date</th>
-                    <th className="py-3 px-4 font-semibold">Trajet</th>
-                    <th className="py-3 px-4 font-semibold">Passagers</th>
-                    <th className="py-3 px-4 font-semibold">Nom</th>
-                    <th className="py-3 px-4 font-semibold">Téléphone</th>
-                    <th className="py-3 px-4 font-semibold">Prix</th>
-                    <th className="py-3 px-4 font-semibold">Statut</th>
-                    <th className="py-3 px-4 font-semibold">Actions</th>
+                    <th className="py-3 px-4 font-semibold">{t.admin.columns.number}</th>
+                    <th className="py-3 px-4 font-semibold">{t.admin.columns.date}</th>
+                    <th className="py-3 px-4 font-semibold">{t.admin.columns.route}</th>
+                    <th className="py-3 px-4 font-semibold">{t.admin.columns.passengers}</th>
+                    <th className="py-3 px-4 font-semibold">{t.admin.columns.name}</th>
+                    <th className="py-3 px-4 font-semibold">{t.admin.columns.phone}</th>
+                    <th className="py-3 px-4 font-semibold">{t.admin.columns.price}</th>
+                    <th className="py-3 px-4 font-semibold">{t.admin.columns.status}</th>
+                    <th className="py-3 px-4 font-semibold">{t.admin.columns.actions}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -226,10 +235,10 @@ export default function AdminPage() {
                       <td className="py-3 px-4 text-sm">{booking.passengers}</td>
                       <td className="py-3 px-4 text-sm">{booking.passengerName}</td>
                       <td className="py-3 px-4 text-sm">{booking.phone}</td>
-                      <td className="py-3 px-4 text-sm font-semibold">{booking.totalPrice.toLocaleString()} CFA</td>
+                      <td className="py-3 px-4 text-sm font-semibold">{formatPrice(booking.totalPrice)}</td>
                       <td className="py-3 px-4">
                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(booking.status)}`}>
-                          {booking.status}
+                          {t.status[booking.status] ?? booking.status}
                         </span>
                       </td>
                       <td className="py-3 px-4">
@@ -238,10 +247,9 @@ export default function AdminPage() {
                           onChange={(e) => updateStatus(booking.number, e.target.value as BookingStatus)}
                           className="text-sm border-2 border-gray-200 rounded-lg px-2 py-1 focus:border-red-600 focus:outline-none"
                         >
-                          <option value="en attente">En attente</option>
-                          <option value="confirmée">Confirmée</option>
-                          <option value="payée">Payée</option>
-                          <option value="annulée">Annulée</option>
+                          {STATUSES.map((status) => (
+                            <option key={status} value={status}>{t.status[status]}</option>
+                          ))}
                         </select>
                       </td>
                     </tr>
@@ -250,7 +258,7 @@ export default function AdminPage() {
               </table>
               {filteredBookings.length === 0 && (
                 <div className="text-center py-12 text-gray-500">
-                  Aucune réservation trouvée
+                  {t.admin.empty}
                 </div>
               )}
             </div>

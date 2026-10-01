@@ -1,33 +1,37 @@
+'use client';
+
 import Link from 'next/link';
+import { useLanguage } from '@/lib/i18n/LanguageProvider';
 
 export default function Footer() {
+  const { t } = useLanguage();
   const agencies = {
     cameroon: [
       {
         city: 'Yaoundé',
-        address: 'Opposite Mansel Hotel, Quartier Fouda, Route de Ngousso',
+        address: t.footer.addresses.yaounde,
         phone: '+237 678 197 361'
       },
       {
         city: 'Buea',
-        address: 'Mile 17 Junction',
+        address: t.footer.addresses.buea,
         phone: '+237 657 675 501'
       },
       {
         city: 'Douala Bonabéri',
-        address: 'Opposite Mayor Ndobo, Bonabéri',
+        address: t.footer.addresses.bonaberi,
         phone: '+237 678 197 360'
       },
       {
         city: 'Douala Akwa',
-        address: 'Opposite small Total, Camp Yabasi, Beside Unity Hall',
+        address: t.footer.addresses.akwa,
         phone: '+237 678 197 360'
       }
     ],
     nigeria: [
       {
         city: 'Ikom',
-        address: 'Peace Mass Transit',
+        address: t.footer.addresses.ikom,
         phone: '+234 706 118 7679'
       }
     ]
@@ -48,7 +52,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-gray-400 mb-6">
-              Votre partenaire de confiance pour voyager à travers l'Afrique dans un confort exceptionnel depuis 2010.
+              {t.footer.tagline}
             </p>
             <div className="flex space-x-4">
               <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors">
@@ -70,19 +74,19 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-4">Liens rapides</h4>
+            <h4 className="text-lg font-bold mb-4">{t.footer.quickLinks}</h4>
             <ul className="space-y-2">
-              <li><Link href="/" className="text-gray-400 hover:text-red-500 transition-colors">Accueil</Link></li>
-              <li><Link href="/reserver" className="text-gray-400 hover:text-red-500 transition-colors">Réserver</Link></li>
-              <li><Link href="/horaires" className="text-gray-400 hover:text-red-500 transition-colors">Horaires</Link></li>
-              <li><Link href="/agences" className="text-gray-400 hover:text-red-500 transition-colors">Nos agences</Link></li>
-              <li><Link href="/faq" className="text-gray-400 hover:text-red-500 transition-colors">FAQ</Link></li>
-              <li><Link href="/ma-reservation" className="text-gray-400 hover:text-red-500 transition-colors">Ma réservation</Link></li>
+              <li><Link href="/" className="text-gray-400 hover:text-red-500 transition-colors">{t.footer.links.home}</Link></li>
+              <li><Link href="/reserver" className="text-gray-400 hover:text-red-500 transition-colors">{t.footer.links.book}</Link></li>
+              <li><Link href="/horaires" className="text-gray-400 hover:text-red-500 transition-colors">{t.footer.links.schedules}</Link></li>
+              <li><Link href="/agences" className="text-gray-400 hover:text-red-500 transition-colors">{t.footer.links.agencies}</Link></li>
+              <li><Link href="/faq" className="text-gray-400 hover:text-red-500 transition-colors">{t.footer.links.faq}</Link></li>
+              <li><Link href="/ma-reservation" className="text-gray-400 hover:text-red-500 transition-colors">{t.footer.links.myBooking}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-4">Agences Cameroun</h4>
+            <h4 className="text-lg font-bold mb-4">{t.footer.cameroonAgencies}</h4>
             <ul className="space-y-3">
               {agencies.cameroon.map((agency, idx) => (
                 <li key={idx}>
@@ -97,30 +101,30 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-lg font-bold mb-4">Contact & Support</h4>
+            <h4 className="text-lg font-bold mb-4">{t.footer.contactSupport}</h4>
             <div className="space-y-4">
               <div>
-                <p className="text-gray-400 mb-2">Service client 24/7</p>
+                <p className="text-gray-400 mb-2">{t.footer.support247}</p>
                 <a href="tel:+237620412171" className="text-red-500 font-semibold hover:text-red-400">
                   WhatsApp: +237 620 412 171
                 </a>
               </div>
               <div>
-                <p className="text-gray-400 mb-2">Email</p>
+                <p className="text-gray-400 mb-2">{t.footer.email}</p>
                 <a href="mailto:support@afrique-con.com" className="text-red-500 font-semibold hover:text-red-400">
                   support@afrique-con.com
                 </a>
               </div>
               <div>
-                <p className="text-gray-400 mb-2">Siège social</p>
+                <p className="text-gray-400 mb-2">{t.footer.headOffice}</p>
                 <p className="text-sm text-gray-300">
                   Middle Farms Limbe<br />
-                  P.B 144 Buea, Cameroun
+                  {t.footer.headOfficeCountry}
                 </p>
               </div>
               {agencies.nigeria.map((agency, idx) => (
                 <div key={idx}>
-                  <p className="text-gray-400 mb-2">Nigeria - {agency.city}</p>
+                  <p className="text-gray-400 mb-2">{t.footer.nigeria}, {agency.city}</p>
                   <p className="text-sm text-gray-300">{agency.address}</p>
                   <a href={`tel:${agency.phone.replace(/\s/g, '')}`} className="text-sm text-red-500 hover:text-red-400">
                     {agency.phone}
@@ -134,12 +138,12 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2026 Afrique-con Plc. Tous droits réservés.
+              {t.footer.rights}
             </p>
-            <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-red-500 transition-colors">Conditions d'utilisation</a>
-              <a href="#" className="text-gray-400 hover:text-red-500 transition-colors">Politique de confidentialité</a>
-              <a href="#" className="text-gray-400 hover:text-red-500 transition-colors">Mentions légales</a>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+              <a href="#" className="text-gray-400 hover:text-red-500 transition-colors">{t.footer.terms}</a>
+              <a href="#" className="text-gray-400 hover:text-red-500 transition-colors">{t.footer.privacy}</a>
+              <a href="#" className="text-gray-400 hover:text-red-500 transition-colors">{t.footer.legal}</a>
             </div>
           </div>
         </div>

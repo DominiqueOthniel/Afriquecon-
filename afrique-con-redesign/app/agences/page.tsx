@@ -1,22 +1,20 @@
-import Link from 'next/link';
+'use client';
+
 import { AGENCIES } from '@/lib/booking-data';
+import PageTopBar from '@/components/PageTopBar';
+import { useLanguage } from '@/lib/i18n/LanguageProvider';
 
 export default function AgencesPage() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        <div className="mb-8">
-          <Link href="/" className="text-red-600 hover:text-red-700 font-semibold inline-flex items-center">
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Retour à l'accueil
-          </Link>
-        </div>
+        <PageTopBar />
 
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h1 className="text-4xl font-bold mb-2 text-gray-900">Nos agences</h1>
-          <p className="text-gray-600 mb-8">Retrouvez-nous dans nos agences à travers le Cameroun</p>
+          <h1 className="text-4xl font-bold mb-2 text-gray-900">{t.agencies.title}</h1>
+          <p className="text-gray-600 mb-8">{t.agencies.subtitle}</p>
 
           <div className="grid md:grid-cols-2 gap-6">
             {AGENCIES.map((agency) => (
@@ -29,7 +27,7 @@ export default function AgencesPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span className="text-gray-700">{agency.address}</span>
+                    <span className="text-gray-700">{t.agencies.addresses[agency.id] ?? agency.address}</span>
                   </div>
 
                   <div className="flex items-center">
@@ -63,7 +61,7 @@ export default function AgencesPage() {
                     <svg className="w-5 h-5 text-red-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span className="text-gray-700">{agency.hours}</span>
+                    <span className="text-gray-700">{t.agencies.hours}</span>
                   </div>
                 </div>
 
@@ -73,16 +71,16 @@ export default function AgencesPage() {
                   rel="noopener noreferrer"
                   className="block w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold transition-colors text-center"
                 >
-                  Voir sur la carte
+                  {t.agencies.viewMap}
                 </a>
               </div>
             ))}
           </div>
 
           <div className="mt-8 bg-red-50 border-2 border-red-200 rounded-xl p-6">
-            <h3 className="font-bold text-lg mb-2">Service client 24/7</h3>
+            <h3 className="font-bold text-lg mb-2">{t.agencies.supportTitle}</h3>
             <p className="text-gray-700">
-              Pour toute question ou assistance, notre équipe est disponible à tout moment par téléphone ou WhatsApp.
+              {t.agencies.supportText}
             </p>
           </div>
         </div>

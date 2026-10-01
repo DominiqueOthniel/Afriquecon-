@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import { useLanguage } from '@/lib/i18n/LanguageProvider';
 
 export default function Booking() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     from: '',
     to: '',
@@ -25,7 +27,7 @@ export default function Booking() {
         setFormSubmitted(true);
         setFormData({ from: '', to: '', date: '', passengers: '1', class: 'silver' });
       })
-      .catch(() => alert('Erreur lors de l\'envoi. Veuillez réessayer ou nous contacter directement.'));
+      .catch(() => alert(t.booking.sendError));
   };
 
   const cities = [
@@ -44,18 +46,18 @@ export default function Booking() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="text-3xl font-bold mb-4">Demande envoyée avec succès</h3>
+            <h3 className="text-3xl font-bold mb-4">{t.booking.successTitle}</h3>
             <p className="text-xl text-gray-600 mb-8">
-              Nous avons bien reçu votre demande de réservation. Notre équipe vous contactera dans les plus brefs délais.
+              {t.booking.successText}
             </p>
             <button
               onClick={() => setFormSubmitted(false)}
               className="bg-gradient-to-r from-red-600 to-red-700 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-200"
             >
-              Faire une nouvelle recherche
+              {t.booking.newSearch}
             </button>
             <p className="text-sm text-gray-500 mt-6">
-              Ou appelez-nous directement au <a href="tel:+237678197361" className="text-red-600 font-semibold hover:underline">+237 678 197 361</a>
+              {t.booking.orCall} <a href="tel:+237678197361" className="text-red-600 font-semibold hover:underline">+237 678 197 361</a>
             </p>
           </div>
         </div>
@@ -69,7 +71,7 @@ export default function Booking() {
       <div className="absolute inset-0 opacity-5">
         <img
           src="https://images.unsplash.com/photo-1526512340740-9217d0159da9?q=80&w=2070&auto=format&fit=crop"
-          alt="Map"
+          alt={t.booking.mapAlt}
           className="w-full h-full object-cover"
         />
       </div>
@@ -77,10 +79,10 @@ export default function Booking() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Réservez votre <span className="text-red-600">voyage</span>
+            {t.booking.titleStart} <span className="text-red-600">{t.booking.titleHighlight}</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Remplissez le formulaire ci-dessous pour rechercher les horaires disponibles
+            {t.booking.subtitle}
           </p>
         </div>
 
@@ -96,14 +98,14 @@ export default function Booking() {
             <input type="hidden" name="form-name" value="reservation" />
             <div style={{ display: 'none' }}>
               <label>
-                Ne pas remplir: <input name="bot-field" />
+                {t.booking.honeypot} <input name="bot-field" />
               </label>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label htmlFor="from" className="block text-sm font-semibold text-gray-700 mb-3">
-                  Ville de départ
+                  {t.booking.from}
                 </label>
                 <select
                   id="from"
@@ -113,7 +115,7 @@ export default function Booking() {
                   className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none transition-colors text-gray-900"
                   required
                 >
-                  <option value="">Sélectionnez une ville</option>
+                  <option value="">{t.booking.selectCity}</option>
                   {cities.map(city => (
                     <option key={city} value={city}>{city}</option>
                   ))}
@@ -122,7 +124,7 @@ export default function Booking() {
 
               <div>
                 <label htmlFor="to" className="block text-sm font-semibold text-gray-700 mb-3">
-                  Ville d'arrivée
+                  {t.booking.to}
                 </label>
                 <select
                   id="to" name="to"
@@ -131,7 +133,7 @@ export default function Booking() {
                   className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none transition-colors text-gray-900"
                   required
                 >
-                  <option value="">Sélectionnez une ville</option>
+                  <option value="">{t.booking.selectCity}</option>
                   {cities.map(city => (
                     <option key={city} value={city}>{city}</option>
                   ))}
@@ -140,7 +142,7 @@ export default function Booking() {
 
               <div>
                 <label htmlFor="date" className="block text-sm font-semibold text-gray-700 mb-3">
-                  Date de départ
+                  {t.booking.date}
                 </label>
                 <input
                   type="date"
@@ -154,7 +156,7 @@ export default function Booking() {
 
               <div>
                 <label htmlFor="passengers" className="block text-sm font-semibold text-gray-700 mb-3">
-                  Nombre de passagers
+                  {t.booking.passengers}
                 </label>
                 <select
                   id="passengers" name="passengers"
@@ -163,7 +165,7 @@ export default function Booking() {
                   className="w-full px-4 py-4 rounded-xl border-2 border-gray-200 focus:border-red-500 focus:outline-none transition-colors text-gray-900"
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
-                    <option key={num} value={num}>{num} {num === 1 ? 'passager' : 'passagers'}</option>
+                    <option key={num} value={num}>{t.booking.passengerCount(num)}</option>
                   ))}
                 </select>
               </div>
@@ -171,7 +173,7 @@ export default function Booking() {
 
             <div className="mb-8">
               <label className="block text-sm font-semibold text-gray-700 mb-4">
-                Classe de confort
+                {t.booking.comfortClass}
               </label>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <label className={`cursor-pointer p-6 rounded-xl border-2 transition-all ${formData.class === 'silver' ? 'border-red-500 bg-red-50 shadow-md' : 'border-gray-200 hover:border-gray-300'}`}>
@@ -184,7 +186,7 @@ export default function Booking() {
                     className="mr-3"
                   />
                   <span className="font-semibold text-gray-900">Silver Comfort Class</span>
-                  <span className="block text-sm text-gray-600 ml-6 mt-1">Confort essentiel</span>
+                  <span className="block text-sm text-gray-600 ml-6 mt-1">{t.booking.silverDescription}</span>
                 </label>
 
                 <label className={`cursor-pointer p-6 rounded-xl border-2 transition-all ${formData.class === 'gold' ? 'border-red-500 bg-red-50 shadow-md' : 'border-gray-200 hover:border-gray-300'}`}>
@@ -197,7 +199,7 @@ export default function Booking() {
                     className="mr-3"
                   />
                   <span className="font-semibold text-gray-900">Gold Comfort Class</span>
-                  <span className="block text-sm text-gray-600 ml-6 mt-1">Expérience premium</span>
+                  <span className="block text-sm text-gray-600 ml-6 mt-1">{t.booking.goldDescription}</span>
                 </label>
               </div>
             </div>
@@ -206,14 +208,14 @@ export default function Booking() {
               type="submit"
               className="w-full bg-red-600 hover:bg-red-700 text-white py-5 rounded-full font-bold text-lg hover:shadow-xl hover:shadow-red-500/50 transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2"
             >
-              <span>Rechercher les horaires</span>
+              <span>{t.booking.submit}</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </button>
 
             <p className="text-center text-sm text-gray-500 mt-6">
-              Ou appelez-nous directement au <a href="tel:+237678197361" className="text-red-600 font-semibold hover:underline">+237 678 197 361</a>
+              {t.booking.orCall} <a href="tel:+237678197361" className="text-red-600 font-semibold hover:underline">+237 678 197 361</a>
             </p>
           </form>
         </div>
