@@ -3,8 +3,11 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ROUTES, COMFORT_CLASSES } from '@/lib/booking-data';
+import PageTopBar from '@/components/PageTopBar';
+import { useLanguage } from '@/lib/i18n/LanguageProvider';
 
 export default function ReserverPage() {
+  const { t, formatPrice, formatDate } = useLanguage();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     routeId: '',
@@ -59,32 +62,35 @@ export default function ReserverPage() {
         setStep(5);
       }
     } catch (error) {
-      alert('Erreur lors de la réservation. Veuillez réessayer.');
+      alert(t.reserver.bookingError);
     } finally {
       setLoading(false);
     }
   };
 
   const sendWhatsApp = () => {
-    const message = `Bonjour, je confirme ma réservation:\nNuméro: ${bookingNumber}\nTrajet: ${selectedRoute?.from} → ${selectedRoute?.to}\nDate: ${formData.date}\nHoraire: ${formData.departureTime}\nClasse: ${formData.comfortClass === 'silver' ? 'Silver' : 'Gold'}\nPassagers: ${formData.passengers}\nPrix total: ${price.toLocaleString('fr-FR')} CFA\nNom: ${formData.passengerName}\nTéléphone: ${formData.phone}`;
+    const message = t.reserver.whatsappMessage({
+      bookingNumber,
+      route: `${selectedRoute?.from} → ${selectedRoute?.to}`,
+      date: formatDate(formData.date),
+      time: formData.departureTime,
+      comfortClass: COMFORT_CLASSES[formData.comfortClass].name,
+      passengers: formData.passengers,
+      total: formatPrice(price),
+      name: formData.passengerName,
+      phone: formData.phone,
+    });
     window.open(`https://wa.me/237620412171?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-        <div className="mb-8">
-          <Link href="/" className="text-red-600 hover:text-red-700 font-semibold inline-flex items-center">
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Retour à l'accueil
-          </Link>
-        </div>
+        <PageTopBar />
 
         <div className="bg-white rounded-2xl shadow-xl p-5 sm:p-8">
-          <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-gray-900">Réserver un billet</h1>
-          <p className="text-gray-600 mb-6 sm:mb-8">Remplissez le formulaire pour réserver votre voyage</p>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-gray-900">{t.reserver.title}</h1>
+          <p className="text-gray-600 mb-6 sm:mb-8">{t.reserver.subtitle}</p>
 
           <div className="flex items-center mb-8">
             {[1, 2, 3, 4].map((s) => (
@@ -100,7 +106,7 @@ export default function ReserverPage() {
           <form onSubmit={handleSubmit}>
             {step === 1 && (
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Choisissez votre trajet</h2>
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">{t.reserver.stepRoute}</h2>
                 <div className="space-y-4">
                   {ROUTES.map(route => (
                     <label key={route.id} className={`relative block p-4 border-2 rounded-xl cursor-pointer hover:border-red-600 ${formData.routeId === route.id ? 'border-red-600 bg-red-50' : 'border-gray-200'}`}>
@@ -115,11 +121,11 @@ export default function ReserverPage() {
                       <div className="flex justify-between items-center gap-3">
                         <div className="min-w-0">
                           <div className="font-bold text-base sm:text-lg text-gray-900">{route.from} → {route.to}</div>
-                          <div className="text-sm text-gray-600">{route.duration} • {route.frequency}</div>
+                          <div className="text-sm text-gray-600">{route.duration} • {t.frequency[route.frequency]}</div>
                         </div>
                         <div className="text-right shrink-0">
-                          <div className="text-base sm:text-lg font-bold text-red-600 whitespace-nowrap">{route.silverPrice.toLocaleString('fr-FR')} CFA</div>
-                          <div className="text-sm text-gray-600">à partir de</div>
+                          <div className="text-base sm:text-lg font-bold text-red-600 whitespace-nowrap">{formatPrice(route.silverPrice)}</div>
+                          <div className="text-sm text-gray-600">{t.reserver.startingFrom}</div>
                         </div>
                       </div>
                     </label>
@@ -131,17 +137,17 @@ export default function ReserverPage() {
                   disabled={!formData.routeId}
                   className="w-full mt-6 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white py-4 rounded-xl font-semibold transition-colors"
                 >
-                  Continuer
+                  {t.common.continue}
                 </button>
               </div>
             )}
 
             {step === 2 && (
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Date et horaire</h2>
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">{t.reserver.stepDateTime}</h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold mb-2">Date de départ</label>
+                    <label className="block text-sm font-semibold mb-2">{t.reserver.departureDate}</label>
                     <input
                       type="date"
                       value={formData.date}
@@ -152,7 +158,7 @@ export default function ReserverPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2">Horaire de départ</label>
+                    <label className="block text-sm font-semibold mb-2">{t.reserver.departureTime}</label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {selectedRoute?.departureTimes.map(time => (
                         <label key={time} className={`relative block p-3 border-2 rounded-xl cursor-pointer text-center font-semibold hover:border-red-600 ${formData.departureTime === time ? 'border-red-600 bg-red-50' : 'border-gray-200'}`}>
@@ -176,7 +182,7 @@ export default function ReserverPage() {
                     onClick={() => setStep(1)}
                     className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-4 rounded-xl font-semibold transition-colors"
                   >
-                    Retour
+                    {t.common.back}
                   </button>
                   <button
                     type="button"
@@ -184,7 +190,7 @@ export default function ReserverPage() {
                     disabled={!formData.date || !formData.departureTime}
                     className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white py-4 rounded-xl font-semibold transition-colors"
                   >
-                    Continuer
+                    {t.common.continue}
                   </button>
                 </div>
               </div>
@@ -192,10 +198,10 @@ export default function ReserverPage() {
 
             {step === 3 && (
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Classe et passagers</h2>
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">{t.reserver.stepClass}</h2>
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-semibold mb-3">Classe de confort</label>
+                    <label className="block text-sm font-semibold mb-3">{t.reserver.comfortClass}</label>
                     <div className="grid md:grid-cols-2 gap-4">
                       {['silver', 'gold'].map(cls => (
                         <label key={cls} className={`relative block p-4 sm:p-6 border-2 rounded-xl cursor-pointer hover:border-red-600 ${formData.comfortClass === cls ? 'border-red-600 bg-red-50' : 'border-gray-200'}`}>
@@ -209,14 +215,14 @@ export default function ReserverPage() {
                           />
                           <div className="font-bold text-lg mb-2">{COMFORT_CLASSES[cls as 'silver' | 'gold'].name}</div>
                           <div className="text-2xl font-bold text-red-600">
-                            {((cls === 'silver' ? selectedRoute?.silverPrice : selectedRoute?.goldPrice) || 0).toLocaleString('fr-FR')} CFA
+                            {formatPrice((cls === 'silver' ? selectedRoute?.silverPrice : selectedRoute?.goldPrice) || 0)}
                           </div>
                         </label>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2">Nombre de passagers</label>
+                    <label className="block text-sm font-semibold mb-2">{t.reserver.passengers}</label>
                     <input
                       type="number"
                       min="1"
@@ -233,14 +239,14 @@ export default function ReserverPage() {
                     onClick={() => setStep(2)}
                     className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-4 rounded-xl font-semibold transition-colors"
                   >
-                    Retour
+                    {t.common.back}
                   </button>
                   <button
                     type="button"
                     onClick={() => setStep(4)}
                     className="flex-1 bg-red-600 hover:bg-red-700 text-white py-4 rounded-xl font-semibold transition-colors"
                   >
-                    Continuer
+                    {t.common.continue}
                   </button>
                 </div>
               </div>
@@ -248,10 +254,10 @@ export default function ReserverPage() {
 
             {step === 4 && (
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Informations passager</h2>
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">{t.reserver.stepPassenger}</h2>
                 <div className="space-y-4 mb-6">
                   <div>
-                    <label className="block text-sm font-semibold mb-2">Nom complet</label>
+                    <label className="block text-sm font-semibold mb-2">{t.reserver.fullName}</label>
                     <input
                       type="text"
                       value={formData.passengerName}
@@ -261,7 +267,7 @@ export default function ReserverPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2">Téléphone</label>
+                    <label className="block text-sm font-semibold mb-2">{t.reserver.phone}</label>
                     <input
                       type="tel"
                       value={formData.phone}
@@ -272,43 +278,43 @@ export default function ReserverPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2">Email (optionnel)</label>
+                    <label className="block text-sm font-semibold mb-2">{t.reserver.emailOptional}</label>
                     <input
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="votre@email.com"
+                      placeholder={t.reserver.emailPlaceholder}
                       className="w-full p-3 border-2 border-gray-200 rounded-xl focus:border-red-600 focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="bg-gray-50 p-6 rounded-xl mb-6">
-                  <h3 className="font-bold text-lg mb-4">Récapitulatif</h3>
+                  <h3 className="font-bold text-lg mb-4">{t.reserver.summary}</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Trajet</span>
+                      <span className="text-gray-600">{t.reserver.route}</span>
                       <span className="font-semibold">{selectedRoute?.from} → {selectedRoute?.to}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Date</span>
-                      <span className="font-semibold">{formData.date}</span>
+                      <span className="text-gray-600">{t.reserver.date}</span>
+                      <span className="font-semibold">{formatDate(formData.date)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Horaire</span>
+                      <span className="text-gray-600">{t.reserver.time}</span>
                       <span className="font-semibold">{formData.departureTime}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Classe</span>
+                      <span className="text-gray-600">{t.reserver.class}</span>
                       <span className="font-semibold">{formData.comfortClass === 'silver' ? 'Silver' : 'Gold'} Comfort Class</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Passagers</span>
+                      <span className="text-gray-600">{t.reserver.passengersLabel}</span>
                       <span className="font-semibold">{formData.passengers}</span>
                     </div>
                     <div className="flex justify-between pt-3 border-t-2 border-gray-200">
-                      <span className="font-bold">Prix total</span>
-                      <span className="font-bold text-red-600 text-xl">{price.toLocaleString('fr-FR')} CFA</span>
+                      <span className="font-bold">{t.reserver.total}</span>
+                      <span className="font-bold text-red-600 text-xl">{formatPrice(price)}</span>
                     </div>
                   </div>
                 </div>
@@ -319,14 +325,14 @@ export default function ReserverPage() {
                     onClick={() => setStep(3)}
                     className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-4 rounded-xl font-semibold transition-colors"
                   >
-                    Retour
+                    {t.common.back}
                   </button>
                   <button
                     type="submit"
                     disabled={loading || !formData.passengerName || !formData.phone}
                     className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white py-4 rounded-xl font-semibold transition-colors"
                   >
-                    {loading ? 'En cours...' : 'Confirmer la réservation'}
+                    {loading ? t.reserver.submitting : t.reserver.confirm}
                   </button>
                 </div>
               </div>
@@ -339,16 +345,16 @@ export default function ReserverPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h2 className="text-3xl font-bold mb-3">Réservation confirmée !</h2>
-                <p className="text-xl text-gray-600 mb-6">Votre numéro de réservation est</p>
+                <h2 className="text-3xl font-bold mb-3">{t.reserver.confirmedTitle}</h2>
+                <p className="text-xl text-gray-600 mb-6">{t.reserver.numberIs}</p>
                 <div className="bg-red-50 border-2 border-red-600 rounded-xl p-6 mb-8">
                   <div className="text-4xl font-bold text-red-600">{bookingNumber}</div>
-                  <p className="text-sm text-gray-600 mt-2">Conservez ce numéro pour suivre votre réservation</p>
+                  <p className="text-sm text-gray-600 mt-2">{t.reserver.keepNumber}</p>
                 </div>
 
                 <div className="bg-gray-50 p-6 rounded-xl mb-6 text-left">
-                  <h3 className="font-bold mb-3">Paiement</h3>
-                  <p className="text-sm mb-4">Payez en agence ou par Mobile Money:</p>
+                  <h3 className="font-bold mb-3">{t.reserver.payment}</h3>
+                  <p className="text-sm mb-4">{t.reserver.paymentInstructions}</p>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center">
                       <span className="font-semibold mr-2">Orange Money:</span>
@@ -363,25 +369,26 @@ export default function ReserverPage() {
 
                 <div className="flex flex-col gap-3">
                   <button
+                    type="button"
                     onClick={sendWhatsApp}
                     className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold transition-colors inline-flex items-center justify-center"
                   >
                     <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                     </svg>
-                    Envoyer sur WhatsApp
+                    {t.reserver.sendWhatsApp}
                   </button>
                   <Link
                     href="/ma-reservation"
                     className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-4 rounded-xl font-semibold transition-colors text-center"
                   >
-                    Voir ma réservation
+                    {t.reserver.viewBooking}
                   </Link>
                   <Link
                     href="/"
                     className="w-full bg-white hover:bg-gray-50 border-2 border-gray-200 text-gray-800 py-4 rounded-xl font-semibold transition-colors text-center"
                   >
-                    Retour à l'accueil
+                    {t.common.backHome}
                   </Link>
                 </div>
               </div>

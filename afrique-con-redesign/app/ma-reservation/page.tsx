@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import type { Booking } from '@/lib/booking-data';
+import PageTopBar from '@/components/PageTopBar';
+import { useLanguage } from '@/lib/i18n/LanguageProvider';
 
 export default function MaReservationPage() {
+  const { t, formatPrice, formatDate } = useLanguage();
   const [bookingNumber, setBookingNumber] = useState('');
   const [phone, setPhone] = useState('');
   const [booking, setBooking] = useState<Booking | null>(null);
@@ -26,18 +28,18 @@ export default function MaReservationPage() {
         setBooking(data.booking);
         setShowBooking(true);
       } else {
-        setError('Réservation introuvable. Vérifiez votre numéro et téléphone.');
+        setError(t.myBooking.notFound);
       }
     } catch (err) {
-      setError('Erreur lors de la recherche. Veuillez réessayer.');
+      setError(t.myBooking.searchError);
     } finally {
       setLoading(false);
     }
   };
 
   const handleCancelRequest = () => {
-    if (confirm('Voulez-vous vraiment demander l\'annulation de cette réservation ?')) {
-      const message = `Bonjour, je souhaite annuler ma réservation:\nNuméro: ${bookingNumber}\nNom: ${booking?.passengerName}\nTéléphone: ${booking?.phone}`;
+    if (confirm(t.myBooking.cancelConfirm)) {
+      const message = t.myBooking.cancelMessage(bookingNumber, booking?.passengerName ?? '', booking?.phone ?? '');
       window.open(`https://wa.me/237620412171?text=${encodeURIComponent(message)}`, '_blank');
     }
   };
@@ -54,22 +56,15 @@ export default function MaReservationPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-2xl">
-        <div className="mb-8">
-          <Link href="/" className="text-red-600 hover:text-red-700 font-semibold inline-flex items-center">
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Retour à l'accueil
-          </Link>
-        </div>
+        <PageTopBar />
 
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h1 className="text-4xl font-bold mb-2 text-gray-900">Ma réservation</h1>
-          <p className="text-gray-600 mb-8">Recherchez votre réservation avec votre numéro et téléphone</p>
+          <h1 className="text-4xl font-bold mb-2 text-gray-900">{t.myBooking.title}</h1>
+          <p className="text-gray-600 mb-8">{t.myBooking.subtitle}</p>
 
           <form onSubmit={handleSearch} className="space-y-4 mb-8">
             <div>
-              <label className="block text-sm font-semibold mb-2">Numéro de réservation</label>
+              <label className="block text-sm font-semibold mb-2">{t.myBooking.number}</label>
               <input
                 type="text"
                 value={bookingNumber}
@@ -80,7 +75,7 @@ export default function MaReservationPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-2">Téléphone</label>
+              <label className="block text-sm font-semibold mb-2">{t.myBooking.phone}</label>
               <input
                 type="tel"
                 value={phone}
@@ -100,51 +95,51 @@ export default function MaReservationPage() {
               disabled={loading}
               className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-300 text-white py-4 rounded-xl font-semibold transition-colors"
             >
-              {loading ? 'Recherche...' : 'Rechercher ma réservation'}
+              {loading ? t.myBooking.searching : t.myBooking.search}
             </button>
           </form>
 
           {showBooking && booking && (
             <div className="border-t-2 border-gray-200 pt-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Détails de la réservation</h2>
+                <h2 className="text-2xl font-bold">{t.myBooking.details}</h2>
                 <span className={`px-4 py-2 rounded-full text-sm font-semibold ${getStatusColor(booking.status)}`}>
-                  {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                  {t.status[booking.status] ?? booking.status}
                 </span>
               </div>
 
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between py-3 border-b border-gray-100">
-                  <span className="text-gray-600">Numéro</span>
+                  <span className="text-gray-600">{t.myBooking.numberLabel}</span>
                   <span className="font-semibold">{bookingNumber}</span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-gray-100">
-                  <span className="text-gray-600">Trajet</span>
+                  <span className="text-gray-600">{t.myBooking.route}</span>
                   <span className="font-semibold">{booking.from} → {booking.to}</span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-gray-100">
-                  <span className="text-gray-600">Date</span>
-                  <span className="font-semibold">{booking.date}</span>
+                  <span className="text-gray-600">{t.myBooking.date}</span>
+                  <span className="font-semibold">{formatDate(booking.date)}</span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-gray-100">
-                  <span className="text-gray-600">Horaire</span>
+                  <span className="text-gray-600">{t.myBooking.time}</span>
                   <span className="font-semibold">{booking.departureTime}</span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-gray-100">
-                  <span className="text-gray-600">Classe</span>
+                  <span className="text-gray-600">{t.myBooking.class}</span>
                   <span className="font-semibold">{booking.comfortClass === 'silver' ? 'Silver' : 'Gold'} Comfort</span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-gray-100">
-                  <span className="text-gray-600">Passagers</span>
+                  <span className="text-gray-600">{t.myBooking.passengers}</span>
                   <span className="font-semibold">{booking.passengers}</span>
                 </div>
                 <div className="flex justify-between py-3 border-b border-gray-100">
-                  <span className="text-gray-600">Nom</span>
+                  <span className="text-gray-600">{t.myBooking.name}</span>
                   <span className="font-semibold">{booking.passengerName}</span>
                 </div>
                 <div className="flex justify-between py-3">
-                  <span className="text-gray-600 font-bold">Prix total</span>
-                  <span className="font-bold text-red-600 text-xl">{booking.totalPrice.toLocaleString()} CFA</span>
+                  <span className="text-gray-600 font-bold">{t.myBooking.total}</span>
+                  <span className="font-bold text-red-600 text-xl">{formatPrice(booking.totalPrice)}</span>
                 </div>
               </div>
 
@@ -154,15 +149,15 @@ export default function MaReservationPage() {
                     onClick={handleCancelRequest}
                     className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 rounded-xl font-semibold transition-colors"
                   >
-                    Demander l'annulation
+                    {t.myBooking.requestCancel}
                   </button>
                   <a
-                    href={`https://wa.me/237620412171?text=${encodeURIComponent(`Bonjour, j'ai une question sur ma réservation ${bookingNumber}`)}`}
+                    href={`https://wa.me/237620412171?text=${encodeURIComponent(t.myBooking.questionMessage(bookingNumber))}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition-colors text-center"
                   >
-                    Contacter sur WhatsApp
+                    {t.myBooking.contactWhatsApp}
                   </a>
                 </div>
               )}
