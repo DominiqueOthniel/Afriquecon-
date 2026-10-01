@@ -66,7 +66,7 @@ export default function ReserverPage() {
   };
 
   const sendWhatsApp = () => {
-    const message = `Bonjour, je confirme ma réservation:\nNuméro: ${bookingNumber}\nTrajet: ${selectedRoute?.from} → ${selectedRoute?.to}\nDate: ${formData.date}\nHoraire: ${formData.departureTime}\nClasse: ${formData.comfortClass === 'silver' ? 'Silver' : 'Gold'}\nPassagers: ${formData.passengers}\nPrix total: ${price.toLocaleString()} CFA\nNom: ${formData.passengerName}\nTéléphone: ${formData.phone}`;
+    const message = `Bonjour, je confirme ma réservation:\nNuméro: ${bookingNumber}\nTrajet: ${selectedRoute?.from} → ${selectedRoute?.to}\nDate: ${formData.date}\nHoraire: ${formData.departureTime}\nClasse: ${formData.comfortClass === 'silver' ? 'Silver' : 'Gold'}\nPassagers: ${formData.passengers}\nPrix total: ${price.toLocaleString('fr-FR')} CFA\nNom: ${formData.passengerName}\nTéléphone: ${formData.phone}`;
     window.open(`https://wa.me/237620412171?text=${encodeURIComponent(message)}`, '_blank');
   };
 
@@ -82,17 +82,17 @@ export default function ReserverPage() {
           </Link>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h1 className="text-4xl font-bold mb-2 text-gray-900">Réserver un billet</h1>
-          <p className="text-gray-600 mb-8">Remplissez le formulaire pour réserver votre voyage</p>
+        <div className="bg-white rounded-2xl shadow-xl p-5 sm:p-8">
+          <h1 className="text-3xl sm:text-4xl font-bold mb-2 text-gray-900">Réserver un billet</h1>
+          <p className="text-gray-600 mb-6 sm:mb-8">Remplissez le formulaire pour réserver votre voyage</p>
 
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center mb-8">
             {[1, 2, 3, 4].map((s) => (
-              <div key={s} className="flex items-center">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${step >= s ? 'bg-red-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
+              <div key={s} className={`flex items-center ${s < 4 ? 'flex-1' : ''}`}>
+                <div className={`w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full flex items-center justify-center font-bold ${step >= s ? 'bg-red-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
                   {s}
                 </div>
-                {s < 4 && <div className={`w-20 h-1 ${step > s ? 'bg-red-600' : 'bg-gray-200'}`}></div>}
+                {s < 4 && <div className={`flex-1 h-1 mx-1 ${step > s ? 'bg-red-600' : 'bg-gray-200'}`}></div>}
               </div>
             ))}
           </div>
@@ -100,10 +100,10 @@ export default function ReserverPage() {
           <form onSubmit={handleSubmit}>
             {step === 1 && (
               <div>
-                <h2 className="text-2xl font-bold mb-4">Choisissez votre trajet</h2>
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Choisissez votre trajet</h2>
                 <div className="space-y-4">
                   {ROUTES.map(route => (
-                    <label key={route.id} className={`block p-4 border-2 rounded-xl cursor-pointer hover:border-red-600 ${formData.routeId === route.id ? 'border-red-600 bg-red-50' : 'border-gray-200'}`}>
+                    <label key={route.id} className={`relative block p-4 border-2 rounded-xl cursor-pointer hover:border-red-600 ${formData.routeId === route.id ? 'border-red-600 bg-red-50' : 'border-gray-200'}`}>
                       <input
                         type="radio"
                         name="route"
@@ -112,13 +112,13 @@ export default function ReserverPage() {
                         onChange={(e) => setFormData({ ...formData, routeId: e.target.value, departureTime: '' })}
                         className="sr-only"
                       />
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <div className="font-bold text-lg">{route.from} → {route.to}</div>
+                      <div className="flex justify-between items-center gap-3">
+                        <div className="min-w-0">
+                          <div className="font-bold text-base sm:text-lg text-gray-900">{route.from} → {route.to}</div>
                           <div className="text-sm text-gray-600">{route.duration} • {route.frequency}</div>
                         </div>
-                        <div className="text-right">
-                          <div className="text-lg font-bold text-red-600">{route.silverPrice.toLocaleString()} CFA</div>
+                        <div className="text-right shrink-0">
+                          <div className="text-base sm:text-lg font-bold text-red-600 whitespace-nowrap">{route.silverPrice.toLocaleString('fr-FR')} CFA</div>
                           <div className="text-sm text-gray-600">à partir de</div>
                         </div>
                       </div>
@@ -138,7 +138,7 @@ export default function ReserverPage() {
 
             {step === 2 && (
               <div>
-                <h2 className="text-2xl font-bold mb-4">Date et horaire</h2>
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Date et horaire</h2>
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-semibold mb-2">Date de départ</label>
@@ -155,7 +155,7 @@ export default function ReserverPage() {
                     <label className="block text-sm font-semibold mb-2">Horaire de départ</label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {selectedRoute?.departureTimes.map(time => (
-                        <label key={time} className={`block p-3 border-2 rounded-xl cursor-pointer text-center font-semibold hover:border-red-600 ${formData.departureTime === time ? 'border-red-600 bg-red-50' : 'border-gray-200'}`}>
+                        <label key={time} className={`relative block p-3 border-2 rounded-xl cursor-pointer text-center font-semibold hover:border-red-600 ${formData.departureTime === time ? 'border-red-600 bg-red-50' : 'border-gray-200'}`}>
                           <input
                             type="radio"
                             name="time"
@@ -192,13 +192,13 @@ export default function ReserverPage() {
 
             {step === 3 && (
               <div>
-                <h2 className="text-2xl font-bold mb-4">Classe et passagers</h2>
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Classe et passagers</h2>
                 <div className="space-y-6">
                   <div>
                     <label className="block text-sm font-semibold mb-3">Classe de confort</label>
                     <div className="grid md:grid-cols-2 gap-4">
                       {['silver', 'gold'].map(cls => (
-                        <label key={cls} className={`block p-6 border-2 rounded-xl cursor-pointer hover:border-red-600 ${formData.comfortClass === cls ? 'border-red-600 bg-red-50' : 'border-gray-200'}`}>
+                        <label key={cls} className={`relative block p-4 sm:p-6 border-2 rounded-xl cursor-pointer hover:border-red-600 ${formData.comfortClass === cls ? 'border-red-600 bg-red-50' : 'border-gray-200'}`}>
                           <input
                             type="radio"
                             name="class"
@@ -209,7 +209,7 @@ export default function ReserverPage() {
                           />
                           <div className="font-bold text-lg mb-2">{COMFORT_CLASSES[cls as 'silver' | 'gold'].name}</div>
                           <div className="text-2xl font-bold text-red-600">
-                            {((cls === 'silver' ? selectedRoute?.silverPrice : selectedRoute?.goldPrice) || 0).toLocaleString()} CFA
+                            {((cls === 'silver' ? selectedRoute?.silverPrice : selectedRoute?.goldPrice) || 0).toLocaleString('fr-FR')} CFA
                           </div>
                         </label>
                       ))}
@@ -248,7 +248,7 @@ export default function ReserverPage() {
 
             {step === 4 && (
               <div>
-                <h2 className="text-2xl font-bold mb-4">Informations passager</h2>
+                <h2 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900">Informations passager</h2>
                 <div className="space-y-4 mb-6">
                   <div>
                     <label className="block text-sm font-semibold mb-2">Nom complet</label>
@@ -308,7 +308,7 @@ export default function ReserverPage() {
                     </div>
                     <div className="flex justify-between pt-3 border-t-2 border-gray-200">
                       <span className="font-bold">Prix total</span>
-                      <span className="font-bold text-red-600 text-xl">{price.toLocaleString()} CFA</span>
+                      <span className="font-bold text-red-600 text-xl">{price.toLocaleString('fr-FR')} CFA</span>
                     </div>
                   </div>
                 </div>
